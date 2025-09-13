@@ -10,15 +10,22 @@ public class ReportManager {
 
     public static ExtentReports getReporter() {
         if (extent == null) {
-            String folderPath = System.getProperty("user.dir") + File.separator + "reports/extent.html";
-            File reportsDir = new File(folderPath);
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportsDir);
-            spark.config().setReportName("Web Automation");
-            spark.config().setDocumentTitle("Web Automation Reports");
+            // Create folder for reports
+            String reportFolder = System.getProperty("user.dir") + File.separator + "reports";
+            new File(reportFolder).mkdirs();
+
+            // Create spark reporter with file path inside the folder
+            String reportPath = reportFolder + File.separator + "extent-report.html";
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
+
+            // Configurations
+            spark.config().setReportName("Web Automation Report");
+            spark.config().setDocumentTitle("Test Execution Results");
+
+            // Extent object
             extent = new ExtentReports();
             extent.attachReporter(spark);
-            extent.setSystemInfo("Tester","Soundarya");
-            return extent;
+            extent.setSystemInfo("Tester", "Soundarya");
         }
         return extent;
     }
