@@ -1,0 +1,37 @@
+[
+  {
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "expectedTitle": "Swag Labs",
+    "testType": "valid",
+    "expectedMessage": "Logged In Successfully"
+  },
+  {
+    "username": "locked_out_user",
+    "password": "secret_sauce",
+    "expectedTitle": "Swag Labs",
+    "testType": "locked",
+    "expectedMessage": "User is locked out"
+  },
+  {
+    "username": "problem_user",
+    "password": "secret_sauce",
+    "expectedTitle": "Swag Labs",
+    "testType": "valid",
+    "expectedMessage": "Logged In Successfully"
+  },
+  {
+    "username": "performance_glitch_user",
+    "password": "secret_sauce",
+    "expectedTitle": "Swag Labs",
+    "testType": "valid",
+    "expectedMessage": "Logged In Successfully"
+  },
+  {
+    "username": "invalid_user",
+    "password": "invalid_password",
+    "expectedTitle": "Swag Labs",
+    "testType": "invalid",
+    "expectedMessage": "Invalid credentials"
+  }
+]
