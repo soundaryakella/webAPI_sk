@@ -42,7 +42,7 @@ public class LoginTest extends BaseTest {
         ExtentTestManager.getTest().info("Navigating to upload file page");
         String relativeFilePath = "src/test/resources/testdata/dve.png";
         String attributeToWait = "data-gtm-form-interact-field-id";
-        int timeoutInSeconds = 30;
+        int timeoutInSeconds = 30;//
         uploadFilePage.uploadFileAndClick(relativeFilePath, attributeToWait, timeoutInSeconds);
         Assert.assertEquals(uploadFilePage.getUploadSuccessMessage(), "File Uploaded!", "Upload message mismatch!");
     }
