@@ -23,7 +23,7 @@ public class LoginPageDataProvider {
     public static Object[][] loginTestData() {
         return new Object[][]{
                 {Map.of(USER_NAME, "student",          PASSWORD, "Password123")},
-                {Map.of(USER_NAME, "student",  PASSWORD, "Password123")}
+                {Map.of(USER_NAME, "student",  PASSWORD, "Password1234")}
         };
     }
 }

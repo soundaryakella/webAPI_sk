@@ -16,9 +16,6 @@ public class LoginPage extends BasePage {
      * Login with username and password using explicit waits
      */
     public LoginPage login(String user, String pass) {
-        // driver.findElement(username).sendKeys(user);
-        // driver.findElement(password).sendKeys(pass);
-        // driver.findElement(loginBtn).click();
         safeSendKeys(username,user);
         safeSendKeys(password,pass);
         safeClick(loginBtn, 40);
@@ -27,8 +24,6 @@ public class LoginPage extends BasePage {
 
     public String getLoggingSuccessMessage() {
         return safeGetText(By.className("post-title"),10);
-//        WebElement successMsg = driver.findElement(By.className("post-title"));
-//        return successMsg.getText();
     }
 
 

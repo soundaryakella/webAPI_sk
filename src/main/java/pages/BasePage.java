@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ConfigReader;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
@@ -214,6 +215,35 @@ public abstract class BasePage {
         WebElement element = waitForElementToBeVisible(locator);
         element.clear();
         element.sendKeys(text);
+    }
+
+    /**
+     * Uploads a file to the given file input element and waits for a specific attribute to appear.
+     *
+     * @param fileInputLocator Locator for the <input type="file"> element
+     * @param relativeFilePath Relative path from project root to the file (e.g. "src/test/resources/testdata/dve.png")
+     * @param attributeName Attribute name to wait for after upload (can be null to skip wait)
+     * @param timeoutInSeconds Timeout in seconds to wait for the attribute (ignored if attributeName is null)
+     */
+    protected void uploadFileAndWaitForAttribute(By fileInputLocator, String relativeFilePath, String attributeName, int timeoutInSeconds) {
+        String filePath = System.getProperty("user.dir") + "/" + relativeFilePath;
+
+        File file = new File(filePath);
+        System.out.println("Uploading file from path: " + filePath);
+        if (!file.exists()) {
+            throw new RuntimeException("File not found at path: " + filePath);
+        }
+
+        driver.findElement(fileInputLocator).sendKeys(file.getAbsolutePath());
+
+        if (attributeName != null) {
+            WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            customWait.until(driver -> {
+                WebElement element = driver.findElement(fileInputLocator);
+                String attrValue = element.getAttribute(attributeName);
+                return attrValue != null;
+            });
+        }
     }
     
     /**
