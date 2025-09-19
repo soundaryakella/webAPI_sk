@@ -9,7 +9,6 @@ public class ApiClient {
     public static RequestSpecification getRequest() {
         return new RequestSpecBuilder()
                 .setBaseUri(ConfigReader.get("api.baseUrl"))
-                .setContentType(ContentType.JSON)
                 .build();
     }
 

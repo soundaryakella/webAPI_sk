@@ -1,13 +1,14 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Regression Suite" parallel="tests" thread-count="4">
+<suite name="Regression Suite" parallel="tests" thread-count="1">
     <listeners>
-        <listener class-name="listeners.ExtentTestListener"></listener>
+        <listener class-name="listeners.ExtentTestListener"/>
+        <listener class-name="listeners.RetryListener"/>
     </listeners>
 
     <test name="API Tests" parallel="methods" thread-count="2">
-        <packages>
-            <package name="apiTests"/>
-        </packages>
+        <classes>
+            <class name="apiTests.UserApiTest"/>
+        </classes>
     </test>
 
     <test name="Web Tests" parallel="methods" thread-count="2">

@@ -31,11 +31,22 @@ public class ExtentTestListener implements ITestListener {
         String screenshotPath = ScreenshotUtil.takeScreenshot(result.getMethod().getMethodName());
         ExtentTestManager.getTest().fail("Test Failed: " + result.getThrowable());
         ExtentTestManager.getTest().addScreenCaptureFromPath(screenshotPath);
+
+        // 🔹 Log retry attempt if RetryAnalyzer is attached
+        if (result.getMethod().getRetryAnalyzer(result) instanceof RetryAnalyzer) {
+            RetryAnalyzer retry = (RetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
+            ExtentTestManager.getTest().info("Retry attempt: " + retry.getCount());
+        }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        ExtentTestManager.getTest().skip("Test skipped");
+        // If skipped because retries exhausted, mark as fail instead
+        if (result.getMethod().getRetryAnalyzer(result) != null) {
+            ExtentTestManager.getTest().fail("Test failed after retries: " + result.getThrowable());
+        } else {
+            ExtentTestManager.getTest().skip("Test Skipped: " + result.getThrowable());
+        }
     }
 
     @Override

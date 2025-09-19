@@ -233,7 +233,7 @@ public abstract class BasePage {
         if (!file.exists()) {
             throw new RuntimeException("File not found at path: " + filePath);
         }
-
+        System.out.println(file.getAbsolutePath());
         driver.findElement(fileInputLocator).sendKeys(file.getAbsolutePath());
 
         if (attributeName != null) {

@@ -8,6 +8,10 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DriverFactory {
 
     // Keeps a separate WebDriver instance per test thread.
@@ -37,10 +41,24 @@ public class DriverFactory {
 
                 case "chrome":
                 default:
+                    // Set Chrome preferences
+                    Map<String, Object> prefs = new HashMap<>();
+
+//                    String downloadFilepath = System.getProperty("user.dir") + File.separator + "downloads";
+                    String downloadFilepath = System.getProperty("user.dir") + "/downloads/";
+                    File file = new File(downloadFilepath);
+                    if (!file.exists()) file.mkdirs();
+                    System.out.println(downloadFilepath);
+
+                    prefs.put("download.default_directory", downloadFilepath);  // ⬅️ Set your folder path
+                    prefs.put("download.prompt_for_download", false);
+                    prefs.put("safebrowsing.enabled", true);  // Avoid "keep file" warnings
                     ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setExperimentalOption("prefs", prefs);
                     if (isHeadless) {
                         chromeOptions.addArguments("--headless=new"); // for latest Chrome versions
                         chromeOptions.addArguments("--window-size=1920,1080");
+
                     }
                     driver.set(new ChromeDriver(chromeOptions));
                     break;
@@ -48,6 +66,7 @@ public class DriverFactory {
         }
         return driver.get();
     }
+
 
     public static void quitDriver() {
         WebDriver webDriver = driver.get();

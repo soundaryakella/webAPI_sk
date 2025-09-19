@@ -2,6 +2,7 @@ package webTests;
 
 import base.BaseTest;
 import org.testng.Assert;
+import pages.DownloadFilePage;
 import pages.UploadFilePage;
 import utils.DriverFactory;
 import dataprovider.LoginPageDataProvider;
@@ -45,5 +46,18 @@ public class LoginTest extends BaseTest {
         int timeoutInSeconds = 30;//
         uploadFilePage.uploadFileAndClick(relativeFilePath, attributeToWait, timeoutInSeconds);
         Assert.assertEquals(uploadFilePage.getUploadSuccessMessage(), "File Uploaded!", "Upload message mismatch!");
+    }
+
+    @Test
+    public void downloadFile() throws InterruptedException {
+        // Always access WebDriver through DriverFactory
+        WebDriver driver = DriverFactory.getDriver();
+        driver.get(ConfigReader.get("web.baseUrl.downloadFile"));
+        DownloadFilePage downloadFilePage = new DownloadFilePage(driver);
+        downloadFilePage.clickOnDownloadFileBtn();
+        Thread.sleep(100000);
+//        ExtentTestManager.getTest().info("Clicked on download button");
+
+
     }
 }
